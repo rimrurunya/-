@@ -1,0 +1,62 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const themeToggle = document.getElementById("darkModeToggle");
+    const bookmarkToggle = document.getElementById("bookmarkToggle");
+    const body = document.body;
+    const catalogToggle = document.getElementById("catalogToggle");
+    const catalogDropdown = catalogToggle.nextElementSibling;
+
+    // Проверяем сохраненную тему
+    if (localStorage.getItem("theme") === "light") {
+        body.classList.remove("dark-mode");
+        body.classList.add("light-mode");
+        themeToggle.checked = true;
+    }
+
+    // Функция для переключения темы
+    function toggleTheme() {
+        if (body.classList.contains("dark-mode")) {
+            body.classList.remove("dark-mode");
+            body.classList.add("light-mode");
+            localStorage.setItem("theme", "light");
+            themeToggle.checked = true;
+        } else {
+            body.classList.remove("light-mode");
+            body.classList.add("dark-mode");
+            localStorage.setItem("theme", "dark");
+            themeToggle.checked = false;
+        }
+    }
+
+    // Переключение темы при нажатии на "ЗАКЛАДКИ"
+    bookmarkToggle.addEventListener("click", toggleTheme);
+
+    // Переключение темы при нажатии на переключатель
+    themeToggle.addEventListener("change", toggleTheme);
+
+    // Открытие/закрытие панели "Каталог"
+    catalogToggle.addEventListener("click", function (event) {
+        event.preventDefault();
+        catalogDropdown.classList.toggle("active");
+    });
+
+    // Закрытие панели при клике вне её
+    document.addEventListener("click", function (event) {
+        if (!catalogDropdown.contains(event.target) && event.target !== catalogToggle) {
+            catalogDropdown.classList.remove("active");
+        }
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    const carousel = document.querySelector(".carousel");
+    const prevButton = document.querySelector(".prev");
+    const nextButton = document.querySelector(".next");
+
+    // Прокрутка при нажатии кнопок
+    prevButton.addEventListener("click", () => {
+        carousel.scrollBy({ left: -200, behavior: "smooth" });
+    });
+
+    nextButton.addEventListener("click", () => {
+        carousel.scrollBy({ left: 200, behavior: "smooth" });
+    });
+});
