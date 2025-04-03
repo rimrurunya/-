@@ -25,6 +25,12 @@ body {
     transition: background 0.3s, color 0.3s; /* Плавный переход */
 }
 
+.dark-mode .carousel-item:hover {
+    background: white; /* Белый фон при наведении */
+    color: black; /* Черный текст при наведении */
+    transition: background 0.3s, color 0.3s; /* Плавный переход */
+}
+
 /* Светлая тема */
 .light-mode {
     background-color: #ffffff;
@@ -53,6 +59,12 @@ body {
     background: black; /* Black background on hover */
     color: white; /* White text color on hover */
     transition: background 0.3s, color 0.3s; /* Smooth transition */
+}
+
+.light-mode .carousel-item:hover {
+    background: black; /* Черный фон при наведении */
+    color: white; /* Белый текст при наведении */
+    transition: background 0.3s, color 0.3s; /* Плавный переход */
 }
 
 /* Навигационная панель */
