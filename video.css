@@ -15,14 +15,22 @@ body {
     background-color: #1a1a1a;
 }
 
+.dark-mode .hot-news-title {
+    color: white; /* Белый цвет текста для темной темы */
+}
+
 /* Светлая тема */
 .light-mode {
     background-color: #ffffff;
-    color: black;
+    color: rgb(255, 253, 253);
 }
 
 .light-mode .navbar {
-    background-color: #f0f0f0;
+    background-color: #000000;
+}
+
+.light-mode .hot-news-title {
+    color: black; /* Черный цвет текста для светлой темы */
 }
 
 /* Навигационная панель */
@@ -86,6 +94,7 @@ body {
 .dropdown-menu.active {
     display: block;
 }
+
 
 
 /* Кнопка входа */
@@ -238,7 +247,7 @@ input:checked + .slider:before {
     font-family: Arial, sans-serif; /* Или 'Roboto', 'Montserrat' */
     font-size: 24px; /* Размер шрифта */
     font-weight: bold; /* Жирное начертание */
-    color: white; /* Белый цвет */
+    color: rgb(132, 132, 132); /* Белый цвет */
     padding-left: 10px; /* Отступ слева */
 }
 
@@ -293,6 +302,61 @@ input:checked + .slider:before {
     color: gold;
     margin-top: 5px;
 }
+
+/* Стили для футера */
+.footer {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 0 20px;
+}
+
+.footer-section {
+    margin: 10px;
+    max-width: 300px;
+}
+
+.footer-section h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.footer-section p {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.social-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;
+}
+
+.social-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    margin-top: 20px;
+    font-size: 14px;
+    color: gray;
+}
+
+/* Стили для логотипа */
+.logot {
+    text-decoration: none; /* Убирает подчеркивание */
+    color: inherit; /* Использует цвет текста родителя */
+    cursor: pointer; /* Указывает, что это кликабельный элемент */
+}
+
 
 
 

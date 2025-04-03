@@ -25,6 +25,16 @@ document.addEventListener("DOMContentLoaded", function () {
             localStorage.setItem("theme", "dark");
             themeToggle.checked = false;
         }
+
+        // Обновляем цвет заголовков
+        const hotNewsTitles = document.querySelectorAll(".hot-news-title");
+        hotNewsTitles.forEach(title => {
+            if (body.classList.contains("light-mode")) {
+                title.style.color = "black"; // Черный цвет для светлой темы
+            } else {
+                title.style.color = "white"; // Белый цвет для темной темы
+            }
+        });
     }
 
     // Переключение темы при нажатии на "ЗАКЛАДКИ"
