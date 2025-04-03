@@ -1,0 +1,12 @@
+{
+  "username": "kazu",
+  "email": "kazu@gmail.com",
+  "password": "$2b$10$nb78HgcUwladM57VcWrP2OVc5IRGF0zURGf.CAHIIFFMoUwD6J6Tm",
+  "createdAt": "2025-04-03T18:23:54.417Z",
+  "status": "admin",
+  "bookmarks": [],
+  "read": [],
+  "profile": {
+    "avatar": "/uploads/avatars/849ea14ab2960401da047d32a58c8d10.ico"
+  }
+}

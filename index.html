@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ꋪꀤꉓꃅ</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .right-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-right: 40px;
+        }
+        
+        .theme-switcher {
+            display: flex;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    
+    <nav class="navbar">
+        <div class="logo"><a href="index.html" class="logot">ꋪꀤꉓꃅ</a></div>
+        <ul class="nav-links">
+            <li class="dropdown">
+                <a href="#" id="catalogToggle"><i class="fas fa-book"></i> КАТАЛОГ <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#"><i class="fas fa-rocket"></i> Фантастика</a></li>
+                    <li><a href="#"><i class="fas fa-heart"></i> Романтика</a></li>
+                    <li><a href="#"><i class="fas fa-magic"></i> Исекай</a></li>
+                    <li><a href="#"><i class="fas fa-search"></i> Детективные</a></li>
+                    <li><a href="#"><i class="fas fa-fist-raised"></i> Боевик</a></li>
+                    <li><a href="#"><i class="fas fa-mountain"></i> Приключение</a></li>
+                    <li><a href="#"><i class="fas fa-running"></i> Спорт</a></li>
+                </ul>
+                
+            </li>
+            <li><a href="#"><i class="fas fa-trophy"></i> ТОПЫ</a></li>
+            <li><a href="#"><i class="fas fa-comments"></i> ФОРУМ</a></li>
+            <li><a href="#"><i class="fas fa-search"></i> ПОИСК</a></li>
+        </ul>
+        <div class="right-section">
+            <div class="theme-switcher">
+                <span class="theme-label">Тема</span>
+            <label class="switch">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="slider"></span>
+            </label>
+            </div>
+            <button class="login-btn" id="loginButton">ВОЙТИ</button>
+        </div>
+    </nav>
+    
+    <main>
+        <!-- Здесь будет основной контент страницы -->
+    </main>
+    
+    <!-- Секция Новинки -->
+    <section class="latest-manga-section">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-fire"></i> Новинки</h2>
+                <p>Последние добавленные манги на нашем сайте</p>
+            </div>
+            <div class="latest-manga-slider-wrapper">
+                <button class="slider-nav-btn prev" id="prevManga"><i class="fas fa-chevron-left"></i></button>
+                <div class="latest-manga-slider-container">
+                    <div class="latest-manga-grid" id="latest-manga-grid">
+                        <!-- Здесь будут отображаться последние манги -->
+                        <div class="latest-manga-loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Загрузка новинок...</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="slider-nav-btn next" id="nextManga"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Модальные окна для входа и регистрации -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            
+            <!-- Табы для переключения между входом и регистрацией -->
+            <div class="tab-container">
+                <button class="tab-btn active" id="loginTab">Вход</button>
+                <button class="tab-btn" id="registerTab">Регистрация</button>
+            </div>
+            
+            <!-- Форма входа -->
+            <div class="tab-content active" id="loginContent">
+                <div class="auth-form-header">
+                    <i class="fas fa-user-circle"></i>
+                    <h2>Вход в аккаунт</h2>
+                </div>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <input type="text" id="login-username" placeholder="Имя пользователя" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="login-password" placeholder="Пароль" required>
+                        <button type="button" class="password-toggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="form-options">
+                        <label>
+                            <input type="checkbox" id="remember-me"> Запомнить меня
+                        </label>
+                        <a href="#" class="forgot-password">Забыли пароль?</a>
+                    </div>
+                    <div id="login-message" class="message" style="display:none;"></div>
+                    <button type="submit" class="auth-submit-btn">Войти <i class="fas fa-arrow-right"></i></button>
+                </form>
+            </div>
+            
+            <!-- Форма регистрации -->
+            <div class="tab-content" id="registerContent">
+                <div class="auth-form-header">
+                    <i class="fas fa-user-plus"></i>
+                    <h2>Создание аккаунта</h2>
+                </div>
+                <form id="registerForm">
+                    <div class="form-group">
+                        <input type="text" id="register-username" placeholder="Имя пользователя" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="register-email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="register-password" placeholder="Пароль" required>
+                        <button type="button" class="password-toggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="register-confirm-password" placeholder="Подтвердите пароль" required>
+                        <button type="button" class="password-toggle">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="form-terms">
+                        <label>
+                            <input type="checkbox" id="terms-checkbox" required> Принимаю <a href="#">условия</a> и <a href="#">политику</a>
+                        </label>
+                    </div>
+                    <div id="register-message" class="message" style="display:none;"></div>
+                    <button type="submit" class="auth-submit-btn">Зарегистрироваться <i class="fas fa-user-plus"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-wave">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100">
+                <path fill="currentColor" fill-opacity="1" d="M0,64L48,80C96,96,192,128,288,128C384,128,480,96,576,85.3C672,75,768,85,864,96C960,107,1056,117,1152,106.7C1248,96,1344,64,1392,48L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+        <div class="footer-container">
+            <div class="footer-section about">
+                <div class="footer-logo">
+                    <a href="#" class="logot">ꋪꀤꉓꃅ</a>
+                </div>
+                <h4><i class="fas fa-info-circle"></i> О нас</h4>
+                <p>Мы предоставляем лучшие манга-новинки и рейтинги для наших пользователей. Наша миссия - сделать мир манги доступным каждому.</p>
+            </div>
+            <div class="footer-section links">
+                <h4><i class="fas fa-link"></i> Быстрые ссылки</h4>
+                <ul>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Главная</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Каталог</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Новинки</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Топ-100</a></li>
+                    <li><a href="#"><i class="fas fa-angle-right"></i> Жанры</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact">
+                <h4><i class="fas fa-address-book"></i> Контакты</h4>
+                <ul class="contact-info">
+                    <li><i class="fas fa-envelope"></i> rimurunyashka@gmail.com</li>
+                    <li><i class="fas fa-phone"></i> +7 (708) 011-97-69</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Анимешная, 42</li>
+                </ul>
+                <div class="newsletter">
+                    <h5>Подпишитесь на рассылку</h5>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Ваш email">
+                        <button><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-section social">
+                <h4><i class="fas fa-share-alt"></i> Следите за нами</h4>
+                <div class="social-links">
+                    <a href="#" target="_blank" class="social-icon discord"><i class="fab fa-discord"></i></a>
+                    <a href="#" target="_blank" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" target="_blank" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank" class="social-icon youtube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" target="_blank" class="social-icon telegram"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">
+                <p>&copy; 2025 <span class="logot">ꋪꀤꉓꃅ</span>. Все права защищены.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">Условия использования</a>
+                <a href="#">Политика конфиденциальности</a>
+                <a href="#">Cookie</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="back-to-top">
+                <a href="#" id="scrollToTopBtn"><i class="fas fa-chevron-up"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
