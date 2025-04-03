@@ -19,6 +19,12 @@ body {
     color: white; /* Белый цвет текста для темной темы */
 }
 
+.dark-mode .library-item:hover {
+    background: white; /* Белый фон при наведении */
+    color: black; /* Черный текст при наведении */
+    transition: background 0.3s, color 0.3s; /* Плавный переход */
+}
+
 /* Светлая тема */
 .light-mode {
     background-color: #ffffff;
@@ -31,6 +37,22 @@ body {
 
 .light-mode .hot-news-title {
     color: black; /* Черный цвет текста для светлой темы */
+}
+
+.light-mode .carousel-item {
+    background: white;
+    color: black; /* Optional: Set text color to black for better readability */
+}
+
+.light-mode .library-item {
+    background: white;
+    color: black; /* Optional: Set text color to black for better readability */
+}
+
+.light-mode .library-item:hover {
+    background: black; /* Black background on hover */
+    color: white; /* White text color on hover */
+    transition: background 0.3s, color 0.3s; /* Smooth transition */
 }
 
 /* Навигационная панель */
