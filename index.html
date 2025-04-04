@@ -22,6 +22,8 @@
             border-radius: 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
+        
+        /* Удаляем проблемные стили */
     </style>
 </head>
 <body class="dark-mode">
@@ -69,18 +71,22 @@
                 <h2><i class="fas fa-fire"></i> Новинки</h2>
                 <p>Последние добавленные манги на нашем сайте</p>
             </div>
-            <div class="latest-manga-slider-wrapper">
-                <button class="slider-nav-btn prev" id="prevManga"><i class="fas fa-chevron-left"></i></button>
-                <div class="latest-manga-slider-container">
-                    <div class="latest-manga-grid" id="latest-manga-grid">
-                        <!-- Здесь будут отображаться последние манги -->
-                        <div class="latest-manga-loading">
+            <div class="manga-slider">
+                <button class="manga-slider-button prev" id="prevManga" aria-label="Предыдущие">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="manga-slider-container">
+                    <div class="manga-cards-grid" id="latest-manga-grid">
+                        <!-- Здесь будут отображаться манги (генерируется через JavaScript) -->
+                        <div class="loading-placeholder">
                             <i class="fas fa-spinner fa-spin"></i>
                             <p>Загрузка новинок...</p>
                         </div>
                     </div>
                 </div>
-                <button class="slider-nav-btn next" id="nextManga"><i class="fas fa-chevron-right"></i></button>
+                <button class="manga-slider-button next" id="nextManga" aria-label="Следующие">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </div>
     </section>
@@ -189,7 +195,7 @@
                 <ul class="contact-info">
                     <li><i class="fas fa-envelope"></i> rimurunyashka@gmail.com</li>
                     <li><i class="fas fa-phone"></i> +7 (708) 011-97-69</li>
-                    <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Анимешная, 42</li>
+                    <li><i class="fas fa-map-marker-alt"></i> ул. Анимешная, 42</li>
                 </ul>
                 <div class="newsletter">
                     <h5>Подпишитесь на рассылку</h5>

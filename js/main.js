@@ -274,6 +274,23 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+
+    // Загрузка последних манг
+    const latestMangaGrid = document.getElementById('latest-manga-grid');
+    if (latestMangaGrid) {
+        loadLatestManga();
+    }
+    
+    // Прямая инициализация слайдера (на случай, если loadLatestManga не сработает)
+    setTimeout(() => {
+        // Проверяем, был ли инициализирован слайдер
+        const prevBtn = document.getElementById('prevManga');
+        const nextBtn = document.getElementById('nextManga');
+        if (prevBtn && nextBtn && typeof prevBtn.onclick !== 'function') {
+            console.log('Прямая инициализация слайдера...');
+            initMangaSlider();
+        }
+    }, 1000);
 });
 
 // Модальное окно аутентификации
@@ -301,4 +318,197 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+// Функция для загрузки последних манг
+function loadLatestManga() {
+    const latestMangaGrid = document.getElementById('latest-manga-grid');
+    
+    if (!latestMangaGrid) {
+        console.error('Элемент для отображения манги не найден');
+        return;
+    }
+    
+    // Показываем индикатор загрузки
+    latestMangaGrid.innerHTML = `
+        <div class="loading-placeholder">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Загрузка новинок...</p>
+        </div>
+    `;
+    
+    // Загружаем данные с сервера
+    fetch('/api/manga/latest')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.manga && data.manga.length > 0) {
+                // Очищаем контейнер
+                latestMangaGrid.innerHTML = '';
+                
+                // Создаем карточки для каждой манги
+                data.manga.forEach(manga => {
+                    const card = createMangaCard(manga);
+                    latestMangaGrid.appendChild(card);
+                });
+                
+                // Инициализируем слайдер
+                initMangaSlider();
+            } else {
+                // Если манги не найдены или произошла ошибка
+                latestMangaGrid.innerHTML = `
+                    <div class="loading-placeholder">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Не удалось загрузить новинки манги</p>
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при загрузке манги:', error);
+            latestMangaGrid.innerHTML = `
+                <div class="loading-placeholder">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <p>Ошибка при загрузке данных</p>
+                </div>
+            `;
+        });
+}
+
+// Функция для создания карточки манги
+function createMangaCard(manga) {
+    // Создаем основной элемент карточки
+    const card = document.createElement('div');
+    card.className = 'manga-card';
+    
+    // Формируем ссылку на страницу манги
+    const mangaUrl = `/manga/${manga.id}`;
+    
+    // Проверяем URL обложки
+    let coverUrl = manga.coverUrl || '/database/manga/covers/placeholder.jpg';
+    
+    // Если URL не начинается с http или /, добавляем /
+    if (!coverUrl.startsWith('http') && !coverUrl.startsWith('/')) {
+        coverUrl = '/' + coverUrl;
+    }
+    
+    // Обрабатываем жанры (максимум 2)
+    let genresHTML = '';
+    if (manga.genres && manga.genres.length > 0) {
+        genresHTML = manga.genres.slice(0, 2)
+            .map(genre => `<span class="manga-card-genre" title="${genre}">${genre}</span>`)
+            .join('');
+    }
+    
+    // Создаем HTML-содержимое карточки
+    card.innerHTML = `
+        <a href="${mangaUrl}" class="manga-card-link">
+            <div class="manga-card-cover">
+                <img 
+                    src="${coverUrl}" 
+                    alt="${manga.title}" 
+                    loading="lazy"
+                    onerror="this.style.display='none'; this.parentNode.innerHTML += '<div class=\'manga-placeholder\'><i class=\'fas fa-book\'></i><span>Нет обложки</span></div>';"
+                >
+                <div class="manga-card-rating">
+                    <i class="fas fa-star"></i> ${manga.rating ? manga.rating.toFixed(1) : '0.0'}
+                </div>
+            </div>
+            <div class="manga-card-info">
+                <h3 class="manga-card-title" title="${manga.title}">${manga.title}</h3>
+                <div class="manga-card-genres">
+                    ${genresHTML}
+                </div>
+            </div>
+        </a>
+    `;
+    
+    return card;
+}
+
+// Функция для инициализации слайдера манги
+function initMangaSlider() {
+    const prevBtn = document.getElementById('prevManga');
+    const nextBtn = document.getElementById('nextManga');
+    const container = document.querySelector('.manga-slider-container');
+    const grid = document.getElementById('latest-manga-grid');
+    
+    if (!prevBtn || !nextBtn || !container || !grid) {
+        console.error('Не найдены элементы слайдера');
+        return;
+    }
+    
+    // Функция для обновления состояния кнопок
+    function updateButtonStates() {
+        const isAtStart = container.scrollLeft <= 10;
+        const isAtEnd = container.scrollLeft + container.offsetWidth >= grid.scrollWidth - 10;
+        
+        prevBtn.classList.toggle('disabled', isAtStart);
+        nextBtn.classList.toggle('disabled', isAtEnd);
+    }
+    
+    // Функция для скролла влево
+    function scrollLeft() {
+        const cardWidth = 220; // Ширина карточки + отступ
+        const scrollAmount = Math.min(container.scrollLeft, cardWidth * 2);
+        smoothScroll(container, container.scrollLeft - scrollAmount);
+    }
+    
+    // Функция для скролла вправо
+    function scrollRight() {
+        const cardWidth = 220; // Ширина карточки + отступ
+        const remainingScroll = grid.scrollWidth - (container.scrollLeft + container.offsetWidth);
+        const scrollAmount = Math.min(remainingScroll, cardWidth * 2);
+        smoothScroll(container, container.scrollLeft + scrollAmount);
+    }
+    
+    // Функция для плавного скролла
+    function smoothScroll(element, target) {
+        const start = element.scrollLeft;
+        const change = target - start;
+        const duration = 300; // мс
+        let startTime = null;
+        
+        function animation(currentTime) {
+            if (startTime === null) startTime = currentTime;
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeProgress = 1 - Math.pow(1 - progress, 3); // Cubic ease-out
+            
+            element.scrollLeft = start + change * easeProgress;
+            
+            if (progress < 1) {
+                window.requestAnimationFrame(animation);
+            } else {
+                updateButtonStates();
+            }
+        }
+        
+        window.requestAnimationFrame(animation);
+    }
+    
+    // Обработчики кликов для кнопок
+    prevBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (!this.classList.contains('disabled')) {
+            scrollLeft();
+        }
+    });
+    
+    nextBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (!this.classList.contains('disabled')) {
+            scrollRight();
+        }
+    });
+    
+    // Обновление состояния кнопок при скролле
+    container.addEventListener('scroll', function() {
+        requestAnimationFrame(updateButtonStates);
+    });
+    
+    // Обновляем состояние кнопок изначально
+    updateButtonStates();
+    
+    // Обновляем состояние кнопок при изменении размера окна
+    window.addEventListener('resize', updateButtonStates);
+}
 

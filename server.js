@@ -1483,6 +1483,59 @@ app.get('/api/manga/latest', (req, res) => {
     }
 });
 
+// API для получения данных манги по ID
+app.get('/api/manga/:id', (req, res) => {
+    try {
+        const mangaId = req.params.id;
+        
+        if (!mangaId) {
+            return res.status(400).json({ 
+                success: false, 
+                message: 'ID манги не указан' 
+            });
+        }
+        
+        const mangaFilePath = path.join(__dirname, 'database', 'manga', 'data', `${mangaId}.json`);
+        
+        if (!fs.existsSync(mangaFilePath)) {
+            return res.status(404).json({ 
+                success: false, 
+                message: 'Манга не найдена' 
+            });
+        }
+        
+        const mangaData = JSON.parse(fs.readFileSync(mangaFilePath, 'utf8'));
+        
+        res.status(200).json({
+            success: true,
+            manga: mangaData
+        });
+    } catch (error) {
+        console.error('Ошибка при получении данных манги:', error);
+        res.status(500).json({ 
+            success: false, 
+            message: 'Ошибка сервера при получении данных манги',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
+    }
+});
+
+// Маршрут для страницы манги
+app.get('/manga/:id', (req, res) => {
+    const mangaId = req.params.id;
+    
+    // Проверяем существование манги в базе данных
+    const mangaFilePath = path.join(__dirname, 'database', 'manga', 'data', `${mangaId}.json`);
+    
+    if (!fs.existsSync(mangaFilePath)) {
+        // Если манга не найдена, все равно отправляем страницу
+        // JavaScript на странице покажет ошибку
+    }
+    
+    // Отправляем HTML-шаблон
+    res.sendFile(path.join(__dirname, 'manga.html'));
+});
+
 // Запуск сервера
 app.listen(PORT, () => {
     console.log(`Сервер запущен на порту http://localhost:${PORT}`);
